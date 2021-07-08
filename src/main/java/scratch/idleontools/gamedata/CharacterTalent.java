@@ -1,0 +1,309 @@
+package scratch.idleontools.gamedata;
+
+
+import com.google.common.collect.Sets;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public enum CharacterTalent {
+
+    /*
+    "HEALTH_BOOSTER MANA_BOOSTER EXPERIENCE_BOOSTER SPARE_CHANGE BEGINNERS_LUCK SHARPENED_AXE GILDED_SWORD KAPOW! STAR_PLAYER BUCKLERED_UP FIST_OF_RAGE QUICKNESS_BOOTS BOOK_OF_THE_WISE LUCKY_CLOVER BLAH INDIANA_ATTACK BREAKIN'_THE_BANK SUPERNOVA_PLAYER TWO_PUNCH_MAN GIMME_GIMME LUCKY_HIT F'LUK'EY_FABRICS CHACHING! LUCKY_HORSESHOE CURSE_OF_MR_LOOTY_BOOTY ITS_YOUR_BIRTHDAY! CMON_OUT_CRYSTALS REROLL_PLS CARDS_GALORE RARES_EVERYWHERE! COIN_TOSS SKILLAGE_DAMAGE PRINTER_GO_BRRR TRIPLE_JAB ONE_STEP_AHEAD LUCKY_CHARMS CLEVER_CLOVER_OBOLS SKILLIEST_STATUE BLISS_N_CHIPS COLLOQUIAL_CONTAINERS MAESTRO_TRANSFUSION CRYSTAL_COUNTDOWN LEFT_HAND_OF_LEARNING RIGHT_HAND_OF_ACTION JMAN_WAS_BETTER _ _ _ QUAD_JAB _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ HAPPY_DUDE KNUCKLEBUSTER FEATHER_FLIGHT EXTRA_BAGS SLEEPIN'_ON_THE_JOB BULLSEYE STR_SUMMORE KAPOW! BULLSEYE FILLER BRUTE_EFFICIENCY MEAT_SHANK CRITIKILL IDLE_BRAWLING IDLE_SKILLING POWER_STRIKE WHIRL HEALTH_OVERDRIVE Double_Strike FIRMLY_GRASP_IT STRENGTH_IN_NUMBERS 'STR'ESS_TESTED_GARB CARRY_A_BIG_STICK ABSOLUTE_UNIT HAUNGRY_FOR_GOLD BIG_PICK COPPER_COLLECTOR MOTHERLODE_MINER TOOL_PROFICIENCY TEMPESTUOUS_EMOTIONS BEAR_SWIPE AXE_HURL MOCKING_SHOUT NO_PAIN_NO_GAIN MONSTER_DECIMATOR APOCALYPSE_ZOW FISTFUL_OF_OBOL STRONGEST_STATUES BLIND_ADRENALINE BEEFY_BOTTLES WORMING_UNDERCOVER BOBBIN'_BOBBERS ALL_FISH_DIET CATCHING_SOME_ZZZ'S BACK_TO_BASICS SHOCKWAVE_SLASH DAGGERANG BRICKY_SKIN MASTERY_UP BALANCED_SPIRIT PRECISION_POWER _ SHIELDIEST_STATUES _ BLOCKY_BOTTLES REFINERY_THROTTLE REDOX_RATES SHARPER_SAWS SUPER_SAMPLES _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ HEALTH_BOOSTER MANA_BOOSTER KNOWLEDGE_BOOSTER SPARE_CHANGE BEGINNERS_LUCK SHARPENED_AXE GILDED_SWORD KAPOW! ELUSIVE_EFFICIENCY BUCKLERED_UP FOCUSED_SOUL FEATHERWEIGHT I_SEE_YOU IDLE_SHOOTING BROKEN_TIME PIERCING_ARROW KUNG_FU_KICK HEMA_OVERDRIVE STRAFE HAVE_ANOTHER! TALENTED_REINVESTOR GARB_OF_UN'AGI'NG_QUALITY HIGH_POLYMER_LIMBS SANIC_SPEED ROBBINGHOOD SMELTIN'_ERRYDAY ACME_ANVIL YEA_I_ALREADY_KNOW GODLY_CREATION VEINS_OF_THE_INFERNAL HOMING_ARROWS MAGIC_SHORTBOW FLAX_INSTASTRING EXTENDO_RANGEO WOAH,_THAT_WAS_FAST! SPEEDNA SHOEFUL_OF_OBOL SHWIFTY_STATUES AGI_AGAIN VELOCITY_VESSELS TELEKI'NET'IC_LOGS BRIAR_PATCH_RUNNER BUG_ENTHUSIAST SUNSET_ON_THE_HIVES PREVIOUS_POINTS 360_NOSCOPE BEAR_TRAP UWU_RAWRRR STOP_RIGHT_THERE HAVE_ANOTHER..._AGAIN! LOOTY_MC_SHOOTY _ STRAIGHTSHOT_STATUES _ VISIBILITY_VESSELS EAGLE_EYE INVASIVE_SPECIES SHROOM_BAIT REFLECTIVE_EYESIGHT _ BALLISTA _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ HEALTH_BOOSTER MANA_BOOSTER KNOWLEDGE_BOOSTER SPARE_CHANGE BEGINNERS_LUCK SHARPENED_AXE GILDED_SWORD KAPOW! BULLSEYE BUCKLERED_UP SMART_EFFICIENCY OVERCLOCKED_ENERGY FARSIGHT IDLE_CASTING ACTIVE_AFK'ER ENERGY_BOLT MINI_FIREBALL MANA_OVERDRIVE TELEPORT YOU'RE_NEXT KNOWLEDGE_IS_POWER UNT'WIS'TED_ROBES POWER_OVERWHELMING FREE_MEAL INDIVIDUAL_INSIGHT LOG_ON_LOGS LEAF_THIEF DEFORESTING_ALL_DOUBT CHOPPIN_IT_UP_EZ INNER_PEACE ICE_SHARDS FLOOR_IS_LAVA TORNADO SPEEDY_BOOK MANA_IS_LIFE PAPERWORK,_GREAT... _ STARING_STATUES _ FUSCIA_FLASKS CHARGE_SYPHON SOOOULS BLESS_UP NEARBY_OUTLET _ CRAZY_CONCOCTIONS AUSPICIOUS_AURA SIZZLING_SKULL TENTEYECLE INSTANT_INVINCIBILITY VIRILE_VIALS OCCULT_OBOLS STUPENDOUS_STATUES WIS_WUMBO FANTASIA_FLASKS CRANIUM_COOKING BUSY_BREWIN' BUBBLE_BREAKTHROUGH SHARING_SOME_SMARTS EARLIER_EDUCATION _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ BORED_TO_DEATH BEGINNER_BEST_CLASS STUDIOUS_QUESTER QUEST_CHUNGUS CRYSTALS_4_DAYYS WILL_OF_THE_ELDEST TICK_TOCK STONKS! ROLL_DA_DICE ATTACKS_ON_SIMMER TOILET_PAPER_POSTAGE EXP_CONVERTER GOBLET_OF_HEMOGLOBIN CARDIOVASCULAR! PULSATION CONVERT_BETTER,_DARNIT! FROTHY_MALK JUST_EXP _ TELEKINETIC_STORAGE PRINTER_SAMPLING _ _ _ SHRINE_ARCHITECT _ Special27 _ _ _ _ _ _ _ _ _ _ _ _ Special40 _ _ _ _ _ _ _ _ _ _ _ _ Special53 _ _ _ _ _ _ _ _ _ _ _ _".split(" ")
+     */
+
+    HEALTH_BOOSTER("HEALTH_BOOSTER", Sets.newHashSet(0, 255, 435)),
+    MANA_BOOSTER("MANA_BOOSTER", Sets.newHashSet(1, 256, 436)),
+    EXPERIENCE_BOOSTER("EXPERIENCE_BOOSTER", Sets.newHashSet(2)),
+    SPARE_CHANGE("SPARE_CHANGE", Sets.newHashSet(3, 258, 438)),
+    BEGINNERS_LUCK("BEGINNERS_LUCK", Sets.newHashSet(4, 259, 439)),
+    SHARPENED_AXE("SHARPENED_AXE", Sets.newHashSet(5, 260, 440)),
+    GILDED_SWORD("GILDED_SWORD", Sets.newHashSet(6, 261, 441)),
+    KAPOW_("KAPOW!", Sets.newHashSet(7, 82, 262, 442)),
+    STAR_PLAYER("STAR_PLAYER", Sets.newHashSet(8)),
+    BUCKLERED_UP("BUCKLERED_UP", Sets.newHashSet(9, 264, 444)),
+    FIST_OF_RAGE("FIST_OF_RAGE", Sets.newHashSet(10)),
+    QUICKNESS_BOOTS("QUICKNESS_BOOTS", Sets.newHashSet(11)),
+    BOOK_OF_THE_WISE("BOOK_OF_THE_WISE", Sets.newHashSet(12)),
+    LUCKY_CLOVER("LUCKY_CLOVER", Sets.newHashSet(13)),
+    BLAH("BLAH", Sets.newHashSet(14)),
+    INDIANA_ATTACK("INDIANA_ATTACK", Sets.newHashSet(15)),
+    BREAKIN__THE_BANK("BREAKIN'_THE_BANK", Sets.newHashSet(16)),
+    SUPERNOVA_PLAYER("SUPERNOVA_PLAYER", Sets.newHashSet(17)),
+    TWO_PUNCH_MAN("TWO_PUNCH_MAN", Sets.newHashSet(18)),
+    GIMME_GIMME("GIMME_GIMME", Sets.newHashSet(19)),
+    LUCKY_HIT("LUCKY_HIT", Sets.newHashSet(20)),
+    F_LUK_EY_FABRICS("F'LUK'EY_FABRICS", Sets.newHashSet(21)),
+    CHACHING_("CHACHING!", Sets.newHashSet(22)),
+    LUCKY_HORSESHOE("LUCKY_HORSESHOE", Sets.newHashSet(23)),
+    CURSE_OF_MR_LOOTY_BOOTY("CURSE_OF_MR_LOOTY_BOOTY", Sets.newHashSet(24)),
+    ITS_YOUR_BIRTHDAY_("ITS_YOUR_BIRTHDAY!", Sets.newHashSet(25)),
+    CMON_OUT_CRYSTALS("CMON_OUT_CRYSTALS", Sets.newHashSet(26)),
+    REROLL_PLS("REROLL_PLS", Sets.newHashSet(27)),
+    CARDS_GALORE("CARDS_GALORE", Sets.newHashSet(28)),
+    RARES_EVERYWHERE_("RARES_EVERYWHERE!", Sets.newHashSet(29)),
+    COIN_TOSS("COIN_TOSS", Sets.newHashSet(30)),
+    SKILLAGE_DAMAGE("SKILLAGE_DAMAGE", Sets.newHashSet(31)),
+    PRINTER_GO_BRRR("PRINTER_GO_BRRR", Sets.newHashSet(32)),
+    TRIPLE_JAB("TRIPLE_JAB", Sets.newHashSet(33)),
+    ONE_STEP_AHEAD("ONE_STEP_AHEAD", Sets.newHashSet(34)),
+    LUCKY_CHARMS("LUCKY_CHARMS", Sets.newHashSet(35)),
+    CLEVER_CLOVER_OBOLS("CLEVER_CLOVER_OBOLS", Sets.newHashSet(36)),
+    SKILLIEST_STATUE("SKILLIEST_STATUE", Sets.newHashSet(37)),
+    BLISS_N_CHIPS("BLISS_N_CHIPS", Sets.newHashSet(38)),
+    COLLOQUIAL_CONTAINERS("COLLOQUIAL_CONTAINERS", Sets.newHashSet(39)),
+    MAESTRO_TRANSFUSION("MAESTRO_TRANSFUSION", Sets.newHashSet(40)),
+    CRYSTAL_COUNTDOWN("CRYSTAL_COUNTDOWN", Sets.newHashSet(41)),
+    LEFT_HAND_OF_LEARNING("LEFT_HAND_OF_LEARNING", Sets.newHashSet(42)),
+    RIGHT_HAND_OF_ACTION("RIGHT_HAND_OF_ACTION", Sets.newHashSet(43)),
+    JMAN_WAS_BETTER("JMAN_WAS_BETTER", Sets.newHashSet(44)),
+    QUAD_JAB("QUAD_JAB", Sets.newHashSet(48)),
+    HAPPY_DUDE("HAPPY_DUDE", Sets.newHashSet(75)),
+    KNUCKLEBUSTER("KNUCKLEBUSTER", Sets.newHashSet(76)),
+    FEATHER_FLIGHT("FEATHER_FLIGHT", Sets.newHashSet(77)),
+    EXTRA_BAGS("EXTRA_BAGS", Sets.newHashSet(78)),
+    SLEEPIN__ON_THE_JOB("SLEEPIN'_ON_THE_JOB", Sets.newHashSet(79)),
+    BULLSEYE("BULLSEYE", Sets.newHashSet(80, 83, 443)),
+    STR_SUMMORE("STR_SUMMORE", Sets.newHashSet(81)),
+    FILLER("FILLER", Sets.newHashSet(84)),
+    BRUTE_EFFICIENCY("BRUTE_EFFICIENCY", Sets.newHashSet(85)),
+    MEAT_SHANK("MEAT_SHANK", Sets.newHashSet(86)),
+    CRITIKILL("CRITIKILL", Sets.newHashSet(87)),
+    IDLE_BRAWLING("IDLE_BRAWLING", Sets.newHashSet(88)),
+    IDLE_SKILLING("IDLE_SKILLING", Sets.newHashSet(89)),
+    POWER_STRIKE("POWER_STRIKE", Sets.newHashSet(90)),
+    WHIRL("WHIRL", Sets.newHashSet(91)),
+    HEALTH_OVERDRIVE("HEALTH_OVERDRIVE", Sets.newHashSet(92)),
+    DOUBLE_STRIKE("Double_Strike", Sets.newHashSet(93)),
+    FIRMLY_GRASP_IT("FIRMLY_GRASP_IT", Sets.newHashSet(94)),
+    STRENGTH_IN_NUMBERS("STRENGTH_IN_NUMBERS", Sets.newHashSet(95)),
+    _STR_ESS_TESTED_GARB("'STR'ESS_TESTED_GARB", Sets.newHashSet(96)),
+    CARRY_A_BIG_STICK("CARRY_A_BIG_STICK", Sets.newHashSet(97)),
+    ABSOLUTE_UNIT("ABSOLUTE_UNIT", Sets.newHashSet(98)),
+    HAUNGRY_FOR_GOLD("HAUNGRY_FOR_GOLD", Sets.newHashSet(99)),
+    BIG_PICK("BIG_PICK", Sets.newHashSet(100)),
+    COPPER_COLLECTOR("COPPER_COLLECTOR", Sets.newHashSet(101)),
+    MOTHERLODE_MINER("MOTHERLODE_MINER", Sets.newHashSet(102)),
+    TOOL_PROFICIENCY("TOOL_PROFICIENCY", Sets.newHashSet(103)),
+    TEMPESTUOUS_EMOTIONS("TEMPESTUOUS_EMOTIONS", Sets.newHashSet(104)),
+    BEAR_SWIPE("BEAR_SWIPE", Sets.newHashSet(105)),
+    AXE_HURL("AXE_HURL", Sets.newHashSet(106)),
+    MOCKING_SHOUT("MOCKING_SHOUT", Sets.newHashSet(107)),
+    NO_PAIN_NO_GAIN("NO_PAIN_NO_GAIN", Sets.newHashSet(108)),
+    MONSTER_DECIMATOR("MONSTER_DECIMATOR", Sets.newHashSet(109)),
+    APOCALYPSE_ZOW("APOCALYPSE_ZOW", Sets.newHashSet(110)),
+    FISTFUL_OF_OBOL("FISTFUL_OF_OBOL", Sets.newHashSet(111)),
+    STRONGEST_STATUES("STRONGEST_STATUES", Sets.newHashSet(112)),
+    BLIND_ADRENALINE("BLIND_ADRENALINE", Sets.newHashSet(113)),
+    BEEFY_BOTTLES("BEEFY_BOTTLES", Sets.newHashSet(114)),
+    WORMING_UNDERCOVER("WORMING_UNDERCOVER", Sets.newHashSet(115)),
+    BOBBIN__BOBBERS("BOBBIN'_BOBBERS", Sets.newHashSet(116)),
+    ALL_FISH_DIET("ALL_FISH_DIET", Sets.newHashSet(117)),
+    CATCHING_SOME_ZZZ_S("CATCHING_SOME_ZZZ'S", Sets.newHashSet(118)),
+    BACK_TO_BASICS("BACK_TO_BASICS", Sets.newHashSet(119)),
+    SHOCKWAVE_SLASH("SHOCKWAVE_SLASH", Sets.newHashSet(120)),
+    DAGGERANG("DAGGERANG", Sets.newHashSet(121)),
+    BRICKY_SKIN("BRICKY_SKIN", Sets.newHashSet(122)),
+    MASTERY_UP("MASTERY_UP", Sets.newHashSet(123)),
+    BALANCED_SPIRIT("BALANCED_SPIRIT", Sets.newHashSet(124)),
+    PRECISION_POWER("PRECISION_POWER", Sets.newHashSet(125)),
+    SHIELDIEST_STATUES("SHIELDIEST_STATUES", Sets.newHashSet(127)),
+    BLOCKY_BOTTLES("BLOCKY_BOTTLES", Sets.newHashSet(129)),
+    REFINERY_THROTTLE("REFINERY_THROTTLE", Sets.newHashSet(130)),
+    REDOX_RATES("REDOX_RATES", Sets.newHashSet(131)),
+    SHARPER_SAWS("SHARPER_SAWS", Sets.newHashSet(132)),
+    SUPER_SAMPLES("SUPER_SAMPLES", Sets.newHashSet(133)),
+    KNOWLEDGE_BOOSTER("KNOWLEDGE_BOOSTER", Sets.newHashSet(257, 437)),
+    ELUSIVE_EFFICIENCY("ELUSIVE_EFFICIENCY", Sets.newHashSet(263)),
+    FOCUSED_SOUL("FOCUSED_SOUL", Sets.newHashSet(265)),
+    FEATHERWEIGHT("FEATHERWEIGHT", Sets.newHashSet(266)),
+    I_SEE_YOU("I_SEE_YOU", Sets.newHashSet(267)),
+    IDLE_SHOOTING("IDLE_SHOOTING", Sets.newHashSet(268)),
+    BROKEN_TIME("BROKEN_TIME", Sets.newHashSet(269)),
+    PIERCING_ARROW("PIERCING_ARROW", Sets.newHashSet(270)),
+    KUNG_FU_KICK("KUNG_FU_KICK", Sets.newHashSet(271)),
+    HEMA_OVERDRIVE("HEMA_OVERDRIVE", Sets.newHashSet(272)),
+    STRAFE("STRAFE", Sets.newHashSet(273)),
+    HAVE_ANOTHER_("HAVE_ANOTHER!", Sets.newHashSet(274)),
+    TALENTED_REINVESTOR("TALENTED_REINVESTOR", Sets.newHashSet(275)),
+    GARB_OF_UN_AGI_NG_QUALITY("GARB_OF_UN'AGI'NG_QUALITY", Sets.newHashSet(276)),
+    HIGH_POLYMER_LIMBS("HIGH_POLYMER_LIMBS", Sets.newHashSet(277)),
+    SANIC_SPEED("SANIC_SPEED", Sets.newHashSet(278)),
+    ROBBINGHOOD("ROBBINGHOOD", Sets.newHashSet(279)),
+    SMELTIN__ERRYDAY("SMELTIN'_ERRYDAY", Sets.newHashSet(280)),
+    ACME_ANVIL("ACME_ANVIL", Sets.newHashSet(281)),
+    YEA_I_ALREADY_KNOW("YEA_I_ALREADY_KNOW", Sets.newHashSet(282)),
+    GODLY_CREATION("GODLY_CREATION", Sets.newHashSet(283)),
+    VEINS_OF_THE_INFERNAL("VEINS_OF_THE_INFERNAL", Sets.newHashSet(284)),
+    HOMING_ARROWS("HOMING_ARROWS", Sets.newHashSet(285)),
+    MAGIC_SHORTBOW("MAGIC_SHORTBOW", Sets.newHashSet(286)),
+    FLAX_INSTASTRING("FLAX_INSTASTRING", Sets.newHashSet(287)),
+    EXTENDO_RANGEO("EXTENDO_RANGEO", Sets.newHashSet(288)),
+    WOAH__THAT_WAS_FAST_("WOAH,_THAT_WAS_FAST!", Sets.newHashSet(289)),
+    SPEEDNA("SPEEDNA", Sets.newHashSet(290)),
+    SHOEFUL_OF_OBOL("SHOEFUL_OF_OBOL", Sets.newHashSet(291)),
+    SHWIFTY_STATUES("SHWIFTY_STATUES", Sets.newHashSet(292)),
+    AGI_AGAIN("AGI_AGAIN", Sets.newHashSet(293)),
+    VELOCITY_VESSELS("VELOCITY_VESSELS", Sets.newHashSet(294)),
+    TELEKI_NET_IC_LOGS("TELEKI'NET'IC_LOGS", Sets.newHashSet(295)),
+    BRIAR_PATCH_RUNNER("BRIAR_PATCH_RUNNER", Sets.newHashSet(296)),
+    BUG_ENTHUSIAST("BUG_ENTHUSIAST", Sets.newHashSet(297)),
+    SUNSET_ON_THE_HIVES("SUNSET_ON_THE_HIVES", Sets.newHashSet(298)),
+    PREVIOUS_POINTS("PREVIOUS_POINTS", Sets.newHashSet(299)),
+    _360_NOSCOPE("360_NOSCOPE", Sets.newHashSet(300)),
+    BEAR_TRAP("BEAR_TRAP", Sets.newHashSet(301)),
+    UWU_RAWRRR("UWU_RAWRRR", Sets.newHashSet(302)),
+    STOP_RIGHT_THERE("STOP_RIGHT_THERE", Sets.newHashSet(303)),
+    HAVE_ANOTHER____AGAIN_("HAVE_ANOTHER..._AGAIN!", Sets.newHashSet(304)),
+    LOOTY_MC_SHOOTY("LOOTY_MC_SHOOTY", Sets.newHashSet(305)),
+    STRAIGHTSHOT_STATUES("STRAIGHTSHOT_STATUES", Sets.newHashSet(307)),
+    VISIBILITY_VESSELS("VISIBILITY_VESSELS", Sets.newHashSet(309)),
+    EAGLE_EYE("EAGLE_EYE", Sets.newHashSet(310)),
+    INVASIVE_SPECIES("INVASIVE_SPECIES", Sets.newHashSet(311)),
+    SHROOM_BAIT("SHROOM_BAIT", Sets.newHashSet(312)),
+    REFLECTIVE_EYESIGHT("REFLECTIVE_EYESIGHT", Sets.newHashSet(313)),
+    BALLISTA("BALLISTA", Sets.newHashSet(315)),
+    SMART_EFFICIENCY("SMART_EFFICIENCY", Sets.newHashSet(445)),
+    OVERCLOCKED_ENERGY("OVERCLOCKED_ENERGY", Sets.newHashSet(446)),
+    FARSIGHT("FARSIGHT", Sets.newHashSet(447)),
+    IDLE_CASTING("IDLE_CASTING", Sets.newHashSet(448)),
+    ACTIVE_AFK_ER("ACTIVE_AFK'ER", Sets.newHashSet(449)),
+    ENERGY_BOLT("ENERGY_BOLT", Sets.newHashSet(450)),
+    MINI_FIREBALL("MINI_FIREBALL", Sets.newHashSet(451)),
+    MANA_OVERDRIVE("MANA_OVERDRIVE", Sets.newHashSet(452)),
+    TELEPORT("TELEPORT", Sets.newHashSet(453)),
+    YOU_RE_NEXT("YOU'RE_NEXT", Sets.newHashSet(454)),
+    KNOWLEDGE_IS_POWER("KNOWLEDGE_IS_POWER", Sets.newHashSet(455)),
+    UNT_WIS_TED_ROBES("UNT'WIS'TED_ROBES", Sets.newHashSet(456)),
+    POWER_OVERWHELMING("POWER_OVERWHELMING", Sets.newHashSet(457)),
+    FREE_MEAL("FREE_MEAL", Sets.newHashSet(458)),
+    INDIVIDUAL_INSIGHT("INDIVIDUAL_INSIGHT", Sets.newHashSet(459)),
+    LOG_ON_LOGS("LOG_ON_LOGS", Sets.newHashSet(460)),
+    LEAF_THIEF("LEAF_THIEF", Sets.newHashSet(461)),
+    DEFORESTING_ALL_DOUBT("DEFORESTING_ALL_DOUBT", Sets.newHashSet(462)),
+    CHOPPIN_IT_UP_EZ("CHOPPIN_IT_UP_EZ", Sets.newHashSet(463)),
+    INNER_PEACE("INNER_PEACE", Sets.newHashSet(464)),
+    ICE_SHARDS("ICE_SHARDS", Sets.newHashSet(465)),
+    FLOOR_IS_LAVA("FLOOR_IS_LAVA", Sets.newHashSet(466)),
+    TORNADO("TORNADO", Sets.newHashSet(467)),
+    SPEEDY_BOOK("SPEEDY_BOOK", Sets.newHashSet(468)),
+    MANA_IS_LIFE("MANA_IS_LIFE", Sets.newHashSet(469)),
+    PAPERWORK__GREAT___("PAPERWORK,_GREAT...", Sets.newHashSet(470)),
+    STARING_STATUES("STARING_STATUES", Sets.newHashSet(472)),
+    FUSCIA_FLASKS("FUSCIA_FLASKS", Sets.newHashSet(474)),
+    CHARGE_SYPHON("CHARGE_SYPHON", Sets.newHashSet(475)),
+    SOOOULS("SOOOULS", Sets.newHashSet(476)),
+    BLESS_UP("BLESS_UP", Sets.newHashSet(477)),
+    NEARBY_OUTLET("NEARBY_OUTLET", Sets.newHashSet(478)),
+    CRAZY_CONCOCTIONS("CRAZY_CONCOCTIONS", Sets.newHashSet(480)),
+    AUSPICIOUS_AURA("AUSPICIOUS_AURA", Sets.newHashSet(481)),
+    SIZZLING_SKULL("SIZZLING_SKULL", Sets.newHashSet(482)),
+    TENTEYECLE("TENTEYECLE", Sets.newHashSet(483)),
+    INSTANT_INVINCIBILITY("INSTANT_INVINCIBILITY", Sets.newHashSet(484)),
+    VIRILE_VIALS("VIRILE_VIALS", Sets.newHashSet(485)),
+    OCCULT_OBOLS("OCCULT_OBOLS", Sets.newHashSet(486)),
+    STUPENDOUS_STATUES("STUPENDOUS_STATUES", Sets.newHashSet(487)),
+    WIS_WUMBO("WIS_WUMBO", Sets.newHashSet(488)),
+    FANTASIA_FLASKS("FANTASIA_FLASKS", Sets.newHashSet(489)),
+    CRANIUM_COOKING("CRANIUM_COOKING", Sets.newHashSet(490)),
+    BUSY_BREWIN_("BUSY_BREWIN'", Sets.newHashSet(491)),
+    BUBBLE_BREAKTHROUGH("BUBBLE_BREAKTHROUGH", Sets.newHashSet(492)),
+    SHARING_SOME_SMARTS("SHARING_SOME_SMARTS", Sets.newHashSet(493)),
+    EARLIER_EDUCATION("EARLIER_EDUCATION", Sets.newHashSet(494)),
+    BORED_TO_DEATH("BORED_TO_DEATH", Sets.newHashSet(615)),
+    BEGINNER_BEST_CLASS("BEGINNER_BEST_CLASS", Sets.newHashSet(616)),
+    STUDIOUS_QUESTER("STUDIOUS_QUESTER", Sets.newHashSet(617)),
+    QUEST_CHUNGUS("QUEST_CHUNGUS", Sets.newHashSet(618)),
+    CRYSTALS_4_DAYYS("CRYSTALS_4_DAYYS", Sets.newHashSet(619)),
+    WILL_OF_THE_ELDEST("WILL_OF_THE_ELDEST", Sets.newHashSet(620)),
+    TICK_TOCK("TICK_TOCK", Sets.newHashSet(621)),
+    STONKS_("STONKS!", Sets.newHashSet(622)),
+    ROLL_DA_DICE("ROLL_DA_DICE", Sets.newHashSet(623)),
+    ATTACKS_ON_SIMMER("ATTACKS_ON_SIMMER", Sets.newHashSet(624)),
+    TOILET_PAPER_POSTAGE("TOILET_PAPER_POSTAGE", Sets.newHashSet(625)),
+    EXP_CONVERTER("EXP_CONVERTER", Sets.newHashSet(626)),
+    GOBLET_OF_HEMOGLOBIN("GOBLET_OF_HEMOGLOBIN", Sets.newHashSet(627)),
+    CARDIOVASCULAR_("CARDIOVASCULAR!", Sets.newHashSet(628)),
+    PULSATION("PULSATION", Sets.newHashSet(629)),
+    CONVERT_BETTER__DARNIT_("CONVERT_BETTER,_DARNIT!", Sets.newHashSet(630)),
+    FROTHY_MALK("FROTHY_MALK", Sets.newHashSet(631)),
+    JUST_EXP("JUST_EXP", Sets.newHashSet(632)),
+    TELEKINETIC_STORAGE("TELEKINETIC_STORAGE", Sets.newHashSet(634)),
+    PRINTER_SAMPLING("PRINTER_SAMPLING", Sets.newHashSet(635)),
+    SHRINE_ARCHITECT("SHRINE_ARCHITECT", Sets.newHashSet(639)),
+    SPECIAL27("Special27", Sets.newHashSet(641)),
+    SPECIAL40("Special40", Sets.newHashSet(654)),
+    SPECIAL53("Special53", Sets.newHashSet(667));
+
+    private static final Map<Integer, CharacterTalent> talentIdxToCharacterTalentMap = new HashMap<>();
+
+    static {
+        Arrays.stream(CharacterTalent.values()).forEach(
+                characterTalent -> characterTalent.talentIdxs.forEach(
+                        talentIdx -> talentIdxToCharacterTalentMap.put(talentIdx, characterTalent)));
+    }
+
+    /** The name of this skill. Warning: May contain odd/special characters. */
+    public final String name;
+
+    /** The index of the skill in the SL_{charNum} array. Starts at 0. */
+    public final Set<Integer> talentIdxs;
+
+    CharacterTalent(String name, Set<Integer> talentIdxs) {
+        this.name = name;
+        this.talentIdxs = talentIdxs;
+    }
+
+    public static CharacterTalent getByTalentIdx(int expIdx) {
+        return Objects.requireNonNull(talentIdxToCharacterTalentMap.get(expIdx));
+    }
+
+    // Helper for generating the enum definitions (Part 1).
+    private static class Helper1 {
+        public static void main(String[] args) {
+            System.out.println(
+                    Arrays.toString(Arrays.stream("HEALTH_BOOSTER MANA_BOOSTER EXPERIENCE_BOOSTER SPARE_CHANGE BEGINNERS_LUCK SHARPENED_AXE GILDED_SWORD KAPOW! STAR_PLAYER BUCKLERED_UP FIST_OF_RAGE QUICKNESS_BOOTS BOOK_OF_THE_WISE LUCKY_CLOVER BLAH INDIANA_ATTACK BREAKIN'_THE_BANK SUPERNOVA_PLAYER TWO_PUNCH_MAN GIMME_GIMME LUCKY_HIT F'LUK'EY_FABRICS CHACHING! LUCKY_HORSESHOE CURSE_OF_MR_LOOTY_BOOTY ITS_YOUR_BIRTHDAY! CMON_OUT_CRYSTALS REROLL_PLS CARDS_GALORE RARES_EVERYWHERE! COIN_TOSS SKILLAGE_DAMAGE PRINTER_GO_BRRR TRIPLE_JAB ONE_STEP_AHEAD LUCKY_CHARMS CLEVER_CLOVER_OBOLS SKILLIEST_STATUE BLISS_N_CHIPS COLLOQUIAL_CONTAINERS MAESTRO_TRANSFUSION CRYSTAL_COUNTDOWN LEFT_HAND_OF_LEARNING RIGHT_HAND_OF_ACTION JMAN_WAS_BETTER _ _ _ QUAD_JAB _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ HAPPY_DUDE KNUCKLEBUSTER FEATHER_FLIGHT EXTRA_BAGS SLEEPIN'_ON_THE_JOB BULLSEYE STR_SUMMORE KAPOW! BULLSEYE FILLER BRUTE_EFFICIENCY MEAT_SHANK CRITIKILL IDLE_BRAWLING IDLE_SKILLING POWER_STRIKE WHIRL HEALTH_OVERDRIVE Double_Strike FIRMLY_GRASP_IT STRENGTH_IN_NUMBERS 'STR'ESS_TESTED_GARB CARRY_A_BIG_STICK ABSOLUTE_UNIT HAUNGRY_FOR_GOLD BIG_PICK COPPER_COLLECTOR MOTHERLODE_MINER TOOL_PROFICIENCY TEMPESTUOUS_EMOTIONS BEAR_SWIPE AXE_HURL MOCKING_SHOUT NO_PAIN_NO_GAIN MONSTER_DECIMATOR APOCALYPSE_ZOW FISTFUL_OF_OBOL STRONGEST_STATUES BLIND_ADRENALINE BEEFY_BOTTLES WORMING_UNDERCOVER BOBBIN'_BOBBERS ALL_FISH_DIET CATCHING_SOME_ZZZ'S BACK_TO_BASICS SHOCKWAVE_SLASH DAGGERANG BRICKY_SKIN MASTERY_UP BALANCED_SPIRIT PRECISION_POWER _ SHIELDIEST_STATUES _ BLOCKY_BOTTLES REFINERY_THROTTLE REDOX_RATES SHARPER_SAWS SUPER_SAMPLES _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ HEALTH_BOOSTER MANA_BOOSTER KNOWLEDGE_BOOSTER SPARE_CHANGE BEGINNERS_LUCK SHARPENED_AXE GILDED_SWORD KAPOW! ELUSIVE_EFFICIENCY BUCKLERED_UP FOCUSED_SOUL FEATHERWEIGHT I_SEE_YOU IDLE_SHOOTING BROKEN_TIME PIERCING_ARROW KUNG_FU_KICK HEMA_OVERDRIVE STRAFE HAVE_ANOTHER! TALENTED_REINVESTOR GARB_OF_UN'AGI'NG_QUALITY HIGH_POLYMER_LIMBS SANIC_SPEED ROBBINGHOOD SMELTIN'_ERRYDAY ACME_ANVIL YEA_I_ALREADY_KNOW GODLY_CREATION VEINS_OF_THE_INFERNAL HOMING_ARROWS MAGIC_SHORTBOW FLAX_INSTASTRING EXTENDO_RANGEO WOAH,_THAT_WAS_FAST! SPEEDNA SHOEFUL_OF_OBOL SHWIFTY_STATUES AGI_AGAIN VELOCITY_VESSELS TELEKI'NET'IC_LOGS BRIAR_PATCH_RUNNER BUG_ENTHUSIAST SUNSET_ON_THE_HIVES PREVIOUS_POINTS 360_NOSCOPE BEAR_TRAP UWU_RAWRRR STOP_RIGHT_THERE HAVE_ANOTHER..._AGAIN! LOOTY_MC_SHOOTY _ STRAIGHTSHOT_STATUES _ VISIBILITY_VESSELS EAGLE_EYE INVASIVE_SPECIES SHROOM_BAIT REFLECTIVE_EYESIGHT _ BALLISTA _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ HEALTH_BOOSTER MANA_BOOSTER KNOWLEDGE_BOOSTER SPARE_CHANGE BEGINNERS_LUCK SHARPENED_AXE GILDED_SWORD KAPOW! BULLSEYE BUCKLERED_UP SMART_EFFICIENCY OVERCLOCKED_ENERGY FARSIGHT IDLE_CASTING ACTIVE_AFK'ER ENERGY_BOLT MINI_FIREBALL MANA_OVERDRIVE TELEPORT YOU'RE_NEXT KNOWLEDGE_IS_POWER UNT'WIS'TED_ROBES POWER_OVERWHELMING FREE_MEAL INDIVIDUAL_INSIGHT LOG_ON_LOGS LEAF_THIEF DEFORESTING_ALL_DOUBT CHOPPIN_IT_UP_EZ INNER_PEACE ICE_SHARDS FLOOR_IS_LAVA TORNADO SPEEDY_BOOK MANA_IS_LIFE PAPERWORK,_GREAT... _ STARING_STATUES _ FUSCIA_FLASKS CHARGE_SYPHON SOOOULS BLESS_UP NEARBY_OUTLET _ CRAZY_CONCOCTIONS AUSPICIOUS_AURA SIZZLING_SKULL TENTEYECLE INSTANT_INVINCIBILITY VIRILE_VIALS OCCULT_OBOLS STUPENDOUS_STATUES WIS_WUMBO FANTASIA_FLASKS CRANIUM_COOKING BUSY_BREWIN' BUBBLE_BREAKTHROUGH SHARING_SOME_SMARTS EARLIER_EDUCATION _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ BORED_TO_DEATH BEGINNER_BEST_CLASS STUDIOUS_QUESTER QUEST_CHUNGUS CRYSTALS_4_DAYYS WILL_OF_THE_ELDEST TICK_TOCK STONKS! ROLL_DA_DICE ATTACKS_ON_SIMMER TOILET_PAPER_POSTAGE EXP_CONVERTER GOBLET_OF_HEMOGLOBIN CARDIOVASCULAR! PULSATION CONVERT_BETTER,_DARNIT! FROTHY_MALK JUST_EXP _ TELEKINETIC_STORAGE PRINTER_SAMPLING _ _ _ SHRINE_ARCHITECT _ Special27 _ _ _ _ _ _ _ _ _ _ _ _ Special40 _ _ _ _ _ _ _ _ _ _ _ _ Special53 _ _ _ _ _ _ _ _ _ _ _ _"
+                            .split(" ")).map(str -> "\"" + str + "\"").toArray()));
+        }
+    }
+
+    // Helper for generating the enum definitions (Part 2).
+    private static class Helper2 {
+
+        public static void main(String[] args) {
+            String[] arr = new String[]{
+                    "HEALTH_BOOSTER", "MANA_BOOSTER", "EXPERIENCE_BOOSTER", "SPARE_CHANGE", "BEGINNERS_LUCK", "SHARPENED_AXE", "GILDED_SWORD", "KAPOW!", "STAR_PLAYER", "BUCKLERED_UP", "FIST_OF_RAGE", "QUICKNESS_BOOTS", "BOOK_OF_THE_WISE", "LUCKY_CLOVER", "BLAH", "INDIANA_ATTACK", "BREAKIN'_THE_BANK", "SUPERNOVA_PLAYER", "TWO_PUNCH_MAN", "GIMME_GIMME", "LUCKY_HIT", "F'LUK'EY_FABRICS", "CHACHING!", "LUCKY_HORSESHOE", "CURSE_OF_MR_LOOTY_BOOTY", "ITS_YOUR_BIRTHDAY!", "CMON_OUT_CRYSTALS", "REROLL_PLS", "CARDS_GALORE", "RARES_EVERYWHERE!", "COIN_TOSS", "SKILLAGE_DAMAGE", "PRINTER_GO_BRRR", "TRIPLE_JAB", "ONE_STEP_AHEAD", "LUCKY_CHARMS", "CLEVER_CLOVER_OBOLS", "SKILLIEST_STATUE", "BLISS_N_CHIPS", "COLLOQUIAL_CONTAINERS", "MAESTRO_TRANSFUSION", "CRYSTAL_COUNTDOWN", "LEFT_HAND_OF_LEARNING", "RIGHT_HAND_OF_ACTION", "JMAN_WAS_BETTER", "_", "_", "_", "QUAD_JAB", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "HAPPY_DUDE", "KNUCKLEBUSTER", "FEATHER_FLIGHT", "EXTRA_BAGS", "SLEEPIN'_ON_THE_JOB", "BULLSEYE", "STR_SUMMORE", "KAPOW!", "BULLSEYE", "FILLER", "BRUTE_EFFICIENCY", "MEAT_SHANK", "CRITIKILL", "IDLE_BRAWLING", "IDLE_SKILLING", "POWER_STRIKE", "WHIRL", "HEALTH_OVERDRIVE", "Double_Strike", "FIRMLY_GRASP_IT", "STRENGTH_IN_NUMBERS", "'STR'ESS_TESTED_GARB", "CARRY_A_BIG_STICK", "ABSOLUTE_UNIT", "HAUNGRY_FOR_GOLD", "BIG_PICK", "COPPER_COLLECTOR", "MOTHERLODE_MINER", "TOOL_PROFICIENCY", "TEMPESTUOUS_EMOTIONS", "BEAR_SWIPE", "AXE_HURL", "MOCKING_SHOUT", "NO_PAIN_NO_GAIN", "MONSTER_DECIMATOR", "APOCALYPSE_ZOW", "FISTFUL_OF_OBOL", "STRONGEST_STATUES", "BLIND_ADRENALINE", "BEEFY_BOTTLES", "WORMING_UNDERCOVER", "BOBBIN'_BOBBERS", "ALL_FISH_DIET", "CATCHING_SOME_ZZZ'S", "BACK_TO_BASICS", "SHOCKWAVE_SLASH", "DAGGERANG", "BRICKY_SKIN", "MASTERY_UP", "BALANCED_SPIRIT", "PRECISION_POWER", "_", "SHIELDIEST_STATUES", "_", "BLOCKY_BOTTLES", "REFINERY_THROTTLE", "REDOX_RATES", "SHARPER_SAWS", "SUPER_SAMPLES", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "HEALTH_BOOSTER", "MANA_BOOSTER", "KNOWLEDGE_BOOSTER", "SPARE_CHANGE", "BEGINNERS_LUCK", "SHARPENED_AXE", "GILDED_SWORD", "KAPOW!", "ELUSIVE_EFFICIENCY", "BUCKLERED_UP", "FOCUSED_SOUL", "FEATHERWEIGHT", "I_SEE_YOU", "IDLE_SHOOTING", "BROKEN_TIME", "PIERCING_ARROW", "KUNG_FU_KICK", "HEMA_OVERDRIVE", "STRAFE", "HAVE_ANOTHER!", "TALENTED_REINVESTOR", "GARB_OF_UN'AGI'NG_QUALITY", "HIGH_POLYMER_LIMBS", "SANIC_SPEED", "ROBBINGHOOD", "SMELTIN'_ERRYDAY", "ACME_ANVIL", "YEA_I_ALREADY_KNOW", "GODLY_CREATION", "VEINS_OF_THE_INFERNAL", "HOMING_ARROWS", "MAGIC_SHORTBOW", "FLAX_INSTASTRING", "EXTENDO_RANGEO", "WOAH,_THAT_WAS_FAST!", "SPEEDNA", "SHOEFUL_OF_OBOL", "SHWIFTY_STATUES", "AGI_AGAIN", "VELOCITY_VESSELS", "TELEKI'NET'IC_LOGS", "BRIAR_PATCH_RUNNER", "BUG_ENTHUSIAST", "SUNSET_ON_THE_HIVES", "PREVIOUS_POINTS", "360_NOSCOPE", "BEAR_TRAP", "UWU_RAWRRR", "STOP_RIGHT_THERE", "HAVE_ANOTHER..._AGAIN!", "LOOTY_MC_SHOOTY", "_", "STRAIGHTSHOT_STATUES", "_", "VISIBILITY_VESSELS", "EAGLE_EYE", "INVASIVE_SPECIES", "SHROOM_BAIT", "REFLECTIVE_EYESIGHT", "_", "BALLISTA", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "HEALTH_BOOSTER", "MANA_BOOSTER", "KNOWLEDGE_BOOSTER", "SPARE_CHANGE", "BEGINNERS_LUCK", "SHARPENED_AXE", "GILDED_SWORD", "KAPOW!", "BULLSEYE", "BUCKLERED_UP", "SMART_EFFICIENCY", "OVERCLOCKED_ENERGY", "FARSIGHT", "IDLE_CASTING", "ACTIVE_AFK'ER", "ENERGY_BOLT", "MINI_FIREBALL", "MANA_OVERDRIVE", "TELEPORT", "YOU'RE_NEXT", "KNOWLEDGE_IS_POWER", "UNT'WIS'TED_ROBES", "POWER_OVERWHELMING", "FREE_MEAL", "INDIVIDUAL_INSIGHT", "LOG_ON_LOGS", "LEAF_THIEF", "DEFORESTING_ALL_DOUBT", "CHOPPIN_IT_UP_EZ", "INNER_PEACE", "ICE_SHARDS", "FLOOR_IS_LAVA", "TORNADO", "SPEEDY_BOOK", "MANA_IS_LIFE", "PAPERWORK,_GREAT...", "_", "STARING_STATUES", "_", "FUSCIA_FLASKS", "CHARGE_SYPHON", "SOOOULS", "BLESS_UP", "NEARBY_OUTLET", "_", "CRAZY_CONCOCTIONS", "AUSPICIOUS_AURA", "SIZZLING_SKULL", "TENTEYECLE", "INSTANT_INVINCIBILITY", "VIRILE_VIALS", "OCCULT_OBOLS", "STUPENDOUS_STATUES", "WIS_WUMBO", "FANTASIA_FLASKS", "CRANIUM_COOKING", "BUSY_BREWIN'", "BUBBLE_BREAKTHROUGH", "SHARING_SOME_SMARTS", "EARLIER_EDUCATION", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "BORED_TO_DEATH", "BEGINNER_BEST_CLASS", "STUDIOUS_QUESTER", "QUEST_CHUNGUS", "CRYSTALS_4_DAYYS", "WILL_OF_THE_ELDEST", "TICK_TOCK", "STONKS!", "ROLL_DA_DICE", "ATTACKS_ON_SIMMER", "TOILET_PAPER_POSTAGE", "EXP_CONVERTER", "GOBLET_OF_HEMOGLOBIN", "CARDIOVASCULAR!", "PULSATION", "CONVERT_BETTER,_DARNIT!", "FROTHY_MALK", "JUST_EXP", "_", "TELEKINETIC_STORAGE", "PRINTER_SAMPLING", "_", "_", "_", "SHRINE_ARCHITECT", "_", "Special27", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "Special40", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "Special53", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_", "_"
+            };
+            LinkedHashMap<String, LinkedHashSet<Integer>> map = new LinkedHashMap<>();
+            for (int i = 0; i < arr.length; i++) {
+                String talentStr = arr[i];
+                if (map.containsKey(talentStr)) {
+                    map.get(talentStr).add(i);
+                } else {
+                    LinkedHashSet<Integer> newSet = new LinkedHashSet<>();
+                    newSet.add(i);
+                    map.put(talentStr, newSet);
+                }
+            }
+            map.remove("_"); // Placeholder
+            map.forEach(
+                    (talentStr, ids) -> {
+                        String cleanedTalentStr = talentStr
+                                .replace(".", "_")
+                                .replace("!", "_")
+                                .replace(",", "_")
+                                .replace("\"", "_")
+                                .replace("'", "_")
+                                .toUpperCase();
+                        if (Character.isDigit(cleanedTalentStr.charAt(0))) {
+                            cleanedTalentStr = "_" + cleanedTalentStr;
+                        }
+                        System.out.printf(
+                                "%s(\"%s\", Sets.newHashSet(%s)),%n",
+                                cleanedTalentStr,
+                                talentStr,
+                                ids.stream().map(Object::toString).collect(Collectors.joining(", ")));
+                    });
+        }
+    }
+}

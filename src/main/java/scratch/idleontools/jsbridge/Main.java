@@ -1,16 +1,10 @@
 package scratch.idleontools.jsbridge;
 
-import com.google.api.client.util.StringUtils;
 import com.google.common.base.Preconditions;
-import io.opencensus.trace.Link;
 import org.mozilla.javascript.*;
-import org.mozilla.javascript.ast.*;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public final class Main {
@@ -20,31 +14,9 @@ public final class Main {
     public static void main(String[] args) throws IOException {
         IdleonJsContext idleonJsContext = IdleonJsContext.initFromSource(JS_RESOURCE_LOCATION);
 
-        //processItemDatabase(idleonJsContext);
-        //processMonsterDatabase(idleonJsContext);
-        //processCustomLists(idleonJsContext);
-        //processActorEvents(idleonJsContext); // WIP
-    }
-
-    private static final Set<String> CUSTOMLISTS_IDS_FILTER = Set.of(
-            "__name__", "arguments", "prototype", "name", "arity", "length");
-
-    private static void processCustomLists(IdleonJsContext idleonJsContext) {
-        NativeFunction f = (NativeFunction) idleonJsContext.getGodObject().get("scripts.CustomLists");
-
-        List<String> customListNames = Arrays.stream(f.getIds())
-                .map(Object::toString)
-                .filter(e -> !CUSTOMLISTS_IDS_FILTER.contains(e))
-                .collect(Collectors.toList());
-        HashMap<String, NativeArray> customListMap = new HashMap<>();
-        customListNames.forEach(listFuncName -> {
-            Preconditions.checkArgument(f.get(listFuncName) instanceof NativeFunction);
-            NativeFunction listFunc = (NativeFunction) f.get(listFuncName);
-            Preconditions.checkArgument(listFunc.getArity() == 0);
-            Object result = listFunc.call(idleonJsContext.getContext(), idleonJsContext.getGlobalScope(), listFunc, new Object[]{});
-            customListMap.put(listFuncName, (NativeArray) result);
-        });
-        System.out.println(customListMap.keySet());
+        processItemDatabase(idleonJsContext);
+        processMonsterDatabase(idleonJsContext);
+        processActorEvents(idleonJsContext); // WIP
     }
 
     private static void processActorEvents(IdleonJsContext idleonJsContext) {
@@ -56,6 +28,7 @@ public final class Main {
         System.out.println(actorEventScripts);
     }
 
+    /** Dumps all monster definitions into TSV format. */
     private static void processMonsterDatabase(IdleonJsContext idleonJsContext) {
         NativeFunction f = (NativeFunction) idleonJsContext.getGodObject().get("scripts.MonsterDefinitions");
         ((NativeFunction) f.get("get")).call(idleonJsContext.getContext(), idleonJsContext.getGlobalScope(), f, new Object[] {});
@@ -87,6 +60,7 @@ public final class Main {
         });
     }
 
+    /** Dumps all item definitions into TSV format. */
     private static void processItemDatabase(IdleonJsContext idleonJsContext) {
         NativeFunction f = (NativeFunction) idleonJsContext.getGodObject().get("scripts.ItemDefinitions");
         ((NativeFunction) f.get("get")).call(idleonJsContext.getContext(), idleonJsContext.getGlobalScope(), f, new Object[] {});

@@ -91,5 +91,6 @@
     <orderEntry type="library" name="Maven: androidx.collection:collection:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.firebase:firebase-annotations:16.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.mozilla:rhino:1.7.13" level="project" />
+    <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.31" level="project" />
   </component>
 </module>

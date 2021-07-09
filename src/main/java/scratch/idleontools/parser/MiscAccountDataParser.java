@@ -20,7 +20,7 @@ public final class MiscAccountDataParser extends AccountDataParser {
     }
 
     @Override
-    public void parseInternal(IdleonParsingContext context) {
+    protected void parseInternal(IdleonParsingContext context) {
         JsonObject rootDocument = context.getRootDocument();
         JsonObject mainFields = DataUtil.getDocumentMainFields(rootDocument);
 

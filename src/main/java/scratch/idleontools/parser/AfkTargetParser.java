@@ -20,7 +20,7 @@ public final class AfkTargetParser extends CharacterDataParser {
     }
 
     @Override
-    public void parseInternal(IdleonParsingContext context, int characterIdx) {
+    protected void parseInternal(IdleonParsingContext context, int characterIdx) {
         JsonObject rootDocument = context.getRootDocument();
         JsonObject mainFields = DataUtil.getDocumentMainFields(rootDocument);
 

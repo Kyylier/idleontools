@@ -6,9 +6,12 @@ import org.mozilla.javascript.ast.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public final class IdleonJsContext {
+
+    private static final String DEFAULT_JS_RESOURCE_LOCATION = "scratch/idleontools/Z.js";
 
     private final String defaultSrcName;
 
@@ -17,6 +20,8 @@ public final class IdleonJsContext {
     private Context context;
     private Scriptable globalScope;
     private NativeObject godObject;
+
+    private Map<String, NativeArray> customListsMap; // scripts.CustomLists
 
     private IdleonJsContext(String appJsLocation) {
         this.defaultSrcName = appJsLocation + ":ApplicationMainBlock:";
@@ -62,6 +67,17 @@ public final class IdleonJsContext {
         return godObject;
     }
 
+    public Map<String, NativeArray> getCustomListsMap()  {
+        if (this.customListsMap == null) {
+            initializeCustomLists();
+        }
+        return this.customListsMap;
+    }
+
+    public static IdleonJsContext initFromSource() throws IOException {
+        return initFromSource(DEFAULT_JS_RESOURCE_LOCATION);
+    }
+
     public static IdleonJsContext initFromSource(String appJsLocation) throws IOException {
         String gameJs = new String(Objects.requireNonNull(Main.class.getClassLoader()
                 .getResourceAsStream(appJsLocation)).readAllBytes(), StandardCharsets.UTF_8);
@@ -73,6 +89,26 @@ public final class IdleonJsContext {
         IdleonJsContext idleonJsContext = new IdleonJsContext(appJsLocation);
         idleonJsContext.initialize(srcNodeVistor);
         return idleonJsContext;
+    }
+
+    private static final Set<String> CUSTOMLISTS_IDS_FILTER = Set.of(
+            "__name__", "arguments", "prototype", "name", "arity", "length");
+    private void initializeCustomLists() {
+        Preconditions.checkState(this.customListsMap == null);
+        NativeFunction f = (NativeFunction) getGodObject().get("scripts.CustomLists");
+        List<String> customListNames = Arrays.stream(f.getIds())
+                .map(Object::toString)
+                .filter(e -> !CUSTOMLISTS_IDS_FILTER.contains(e))
+                .collect(Collectors.toList());
+        HashMap<String, NativeArray> customListsMap = new HashMap<>();
+        customListNames.forEach(listFuncName -> {
+            Preconditions.checkArgument(f.get(listFuncName) instanceof NativeFunction);
+            NativeFunction listFunc = (NativeFunction) f.get(listFuncName);
+            Preconditions.checkArgument(listFunc.getArity() == 0);
+            Object result = listFunc.call(getContext(), getGlobalScope(), listFunc, new Object[]{});
+            customListsMap.put(listFuncName, (NativeArray) result);
+        });
+        this.customListsMap = customListsMap;
     }
 
     /**
@@ -89,7 +125,7 @@ public final class IdleonJsContext {
         @Override
         public boolean visit(AstNode node) {
             if (done) {
-                return true;
+                return false;
             }
 
             if (Token.STRING == node.getType()) {

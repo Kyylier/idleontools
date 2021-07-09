@@ -8,7 +8,7 @@ public abstract class CharacterDataParser {
 
     public abstract ImmutableSet<String> getHandledFields(int characterIdx);
 
-    public abstract void parseInternal(IdleonParsingContext context, int characterIdx);
+    protected abstract void parseInternal(IdleonParsingContext context, int characterIdx);
 
     public final void parse(IdleonParsingContext context, int characterIdx) {
         Preconditions.checkState(context.isInitialized());

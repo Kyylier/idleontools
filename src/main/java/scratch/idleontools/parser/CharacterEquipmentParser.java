@@ -5,9 +5,9 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import scratch.idleontools.gamedata.EquipmentArmorSlot;
-import scratch.idleontools.gamedata.EquipmentStat;
-import scratch.idleontools.gamedata.EquipmentToolSlot;
+import scratch.idleontools.gamedatadeprecated.EquipmentArmorSlot;
+import scratch.idleontools.gamedatadeprecated.EquipmentStat;
+import scratch.idleontools.gamedatadeprecated.EquipmentToolSlot;
 import scratch.idleontools.model.DataUtil;
 import scratch.idleontools.parser.interfaces.CharacterDataParser;
 
@@ -37,7 +37,7 @@ public final class CharacterEquipmentParser extends CharacterDataParser {
     }
 
     @Override
-    public void parseInternal(IdleonParsingContext context, int characterIdx) {
+    protected void parseInternal(IdleonParsingContext context, int characterIdx) {
         JsonObject rootDocument = context.getRootDocument();
         JsonObject mainFields = DataUtil.getDocumentMainFields(rootDocument);
 

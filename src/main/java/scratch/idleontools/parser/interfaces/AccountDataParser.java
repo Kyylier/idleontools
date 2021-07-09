@@ -8,7 +8,7 @@ public abstract class AccountDataParser {
 
     public abstract ImmutableSet<String> getHandledFields();
 
-    public abstract void parseInternal(IdleonParsingContext context);
+    protected abstract void parseInternal(IdleonParsingContext context);
 
     public final void parse(IdleonParsingContext context) {
         Preconditions.checkState(context.isInitialized());

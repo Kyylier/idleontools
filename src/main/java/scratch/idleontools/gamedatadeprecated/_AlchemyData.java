@@ -1,4 +1,4 @@
-package scratch.idleontools.gamedata;
+package scratch.idleontools.gamedatadeprecated;
 
 import java.util.Arrays;
 

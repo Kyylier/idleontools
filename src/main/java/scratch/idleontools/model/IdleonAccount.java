@@ -1,10 +1,10 @@
 package scratch.idleontools.model;
 
 import com.google.common.base.Preconditions;
-import scratch.idleontools.gamedata.Cauldron;
-import scratch.idleontools.gamedata.CauldronBubble;
-import scratch.idleontools.gamedata.CauldronUpgrade;
-import scratch.idleontools.gamedata.CauldronVial;
+import scratch.idleontools.gamedatadeprecated.Cauldron;
+import scratch.idleontools.gamedatadeprecated.CauldronBubble;
+import scratch.idleontools.gamedatadeprecated.CauldronUpgrade;
+import scratch.idleontools.gamedatadeprecated.CauldronVial;
 
 import java.util.*;
 

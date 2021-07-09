@@ -1,62 +1,60 @@
 package scratch.idleontools.gamedata;
 
+import javax.annotation.Generated;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/** Enumeration of all character classes. */
+@Generated(
+    value = "Generated with FreeMarker (version 2.3.31) using template character-class.ftl.",
+    date = "Jul 9, 2021, 4:32:14 PM"
+)
 public enum CharacterClass {
-    /*
-    ["0", "BEGINNER", "JOURNEYMAN", "MAESTRO", "VIRTUOSO", "INFINILYTE", "RAGE_BASICS", "WARRIOR", "BARBARIAN", "SQUIRE",
-    "BLOOD_BERSERKER", "DEATH_BRINGER", "DIVINE_KNIGHT", "ROYAL_GUARDIAN", "FILLER", "FILLER", "FILLER", "FILLER", "CALM_BASICS", "ARCHER",
-    "BOWMAN", "HUNTER", "SIEGE_BREAKER", "MAYHEIM", "WIND_WALKER", "BEAST_MASTER", "FILLER", "FILLER", "FILLER", "FILLER",
-    "SAVVY_BASICS", "MAGE", "WIZARD", "SHAMAN", "ELEMENTAL_SORCERER", "SPIRITUAL_MONK", "BUBONIC_CONJUROR", "ARCANE_CULTIST", "FILLER", "FILLER",
-    "FILLER", "FILLER", "MINING", "SMITHING", "CHOPPING", "FISHING", "ALCHEMY", "BUG_CATCHING", "TRAPPING", "CONSTRUCTION", "WORSHIP"]
-     */
 
-    BEGINNER(1),
-    JOURNEYMAN(2),
-    MAESTRO(3),
-    VIRTUOSO(4),
-    INFINILYTE(5),
+    BEGINNER(1, "BEGINNER"),
+    JOURNEYMAN(2, "JOURNEYMAN"),
+    MAESTRO(3, "MAESTRO"),
+    VIRTUOSO(4, "VIRTUOSO"),
+    INFINILYTE(5, "INFINILYTE"),
+    WARRIOR(7, "MINING"),
+    BARBARIAN(8, "FISHING"),
+    SQUIRE(9, "TOWN3LEFT"),
+    BLOOD_BERSERKER(10, "TOWN4LEFT"),
+    DEATH_BRINGER(11, "TOWN6LEFT"),
+    DIVINE_KNIGHT(12, "TOWN5LEFT"),
+    ROYAL_GUARDIAN(13, "TOWN7LEFT"),
+    ARCHER(19, "ARCHER"),
+    BOWMAN(20, "BOWMAN"),
+    HUNTER(21, "HUNTER"),
+    SIEGE_BREAKER(22, "SIEGE_BREAKER"),
+    MAYHEIM(23, "MAYHEIM"),
+    WIND_WALKER(24, "WIND_WALKER"),
+    BEAST_MASTER(25, "BEAST_MASTER"),
+    MAGE(31, "MAGE"),
+    WIZARD(32, "FILLER"),
+    SHAMAN(33, "FILLER"),
+    ELEMENTAL_SORCERER(34, "FILLER"),
+    SPIRITUAL_MONK(35, "FILLER"),
+    BUBONIC_CONJUROR(36, "FILLER"),
+    ARCANE_CULTIST(37, "FILLER");
 
-    WARRIOR(7),
-    BARBARIAN(8),
-    SQUIRE(9),
-    BLOOD_BERSERKER(10),
-    DEATH_BRINGER(11),
-    DIVINE_KNIGHT(12),
-    ROYAL_GUARDIAN(13),
-
-    ARCHER(19),
-    BOWMAN(20),
-    HUNTER(21),
-    SIEGE_BREAKER(22),
-    MAYHEIM(23),
-    WIND_WALKER(24),
-    BEAST_MASTER(25),
-
-    MAGE(31),
-    WIZARD(32),
-    SHAMAN(33),
-    ELEMENTAL_SORCERER(34),
-    SPIRITUAL_MONK(35),
-    BUBONIC_CONJUROR(36),
-    ARCANE_CULTIST(37);
-
-    private static final Map<Integer, CharacterClass> idToCharacterClassMap = new HashMap<>();
+    private static final Map<Integer, CharacterClass> classIdToCharacterClassMap = new HashMap<>();
 
     static {
-        Arrays.stream(CharacterClass.values()).forEach(characterClass -> idToCharacterClassMap.put(characterClass.classId, characterClass));
+        Arrays.stream(CharacterClass.values()).forEach(characterClass -> classIdToCharacterClassMap.put(characterClass.classId, characterClass));
     }
 
     public final int classId;
+    public final String classSpecializeSkill;
 
-    CharacterClass(int classId) {
+    CharacterClass(int classId, String classSpecializeSkill) {
         this.classId = classId;
+        this.classSpecializeSkill = classSpecializeSkill;
     }
 
     public static CharacterClass getById(int classId) {
-        return Objects.requireNonNull(idToCharacterClassMap.get(classId));
+        return Objects.requireNonNull(classIdToCharacterClassMap.get(classId));
     }
 }

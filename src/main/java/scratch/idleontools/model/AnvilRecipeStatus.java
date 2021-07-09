@@ -1,7 +1,7 @@
 package scratch.idleontools.model;
 
 import com.google.common.collect.ImmutableSet;
-import scratch.idleontools.gamedata.AnvilRecipe;
+import scratch.idleontools.gamedatadeprecated.AnvilRecipe;
 
 import java.util.Set;
 

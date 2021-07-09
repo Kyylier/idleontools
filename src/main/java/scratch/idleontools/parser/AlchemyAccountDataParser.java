@@ -5,10 +5,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import scratch.idleontools.gamedata.Cauldron;
-import scratch.idleontools.gamedata.CauldronBubble;
-import scratch.idleontools.gamedata.CauldronUpgrade;
-import scratch.idleontools.gamedata.CauldronVial;
+import scratch.idleontools.gamedatadeprecated.Cauldron;
+import scratch.idleontools.gamedatadeprecated.CauldronBubble;
+import scratch.idleontools.gamedatadeprecated.CauldronUpgrade;
+import scratch.idleontools.gamedatadeprecated.CauldronVial;
 import scratch.idleontools.model.DataUtil;
 import scratch.idleontools.parser.interfaces.AccountDataParser;
 
@@ -40,7 +40,7 @@ public final class AlchemyAccountDataParser extends AccountDataParser {
     }
 
     @Override
-    public void parseInternal(IdleonParsingContext context) {
+    protected void parseInternal(IdleonParsingContext context) {
         JsonObject rootDocument = context.getRootDocument();
         JsonObject mainFields = DataUtil.getDocumentMainFields(rootDocument);
 
@@ -108,7 +108,7 @@ public final class AlchemyAccountDataParser extends AccountDataParser {
         context.getResultBuilder().setCauldronInfo(cauldronExpMap, cauldronBubbleLevelsMap, cauldronVialLevelsMap);
     }
 
-    /** Loads the upgrade levels {@link scratch.idleontools.gamedata.CauldronUpgrade} for each cauldron. */
+    /** Loads the upgrade levels {@link CauldronUpgrade} for each cauldron. */
     private static void parseCauldronUpgradeLevels(IdleonParsingContext context, JsonObject mainFields) {
         int[] cauldronUpgradeLevelsArr = DataUtil.parseIntegerArray(DataUtil.getFieldAsArray(mainFields, FIELD_NAME_CAULDRON_UPGRADE_LEVELS));
         int i = 0;

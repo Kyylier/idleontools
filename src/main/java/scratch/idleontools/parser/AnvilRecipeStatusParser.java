@@ -5,7 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import scratch.idleontools.model.AnvilRecipeStatus;
-import scratch.idleontools.gamedata.AnvilRecipe;
+import scratch.idleontools.gamedatadeprecated.AnvilRecipe;
 import scratch.idleontools.model.DataUtil;
 import scratch.idleontools.parser.interfaces.AccountDataParser;
 
@@ -29,7 +29,7 @@ public final class AnvilRecipeStatusParser extends AccountDataParser {
     }
 
     @Override
-    public void parseInternal(IdleonParsingContext context) {
+    protected void parseInternal(IdleonParsingContext context) {
         JsonObject rootDocument = context.getRootDocument();
         JsonObject mainFields = DataUtil.getDocumentMainFields(rootDocument);
 

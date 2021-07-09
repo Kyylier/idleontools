@@ -2,7 +2,7 @@ package scratch.idleontools.parser;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
-import scratch.idleontools.gamedata.CharacterClass;
+import scratch.idleontools.gamedatadeprecated.CharacterClass;
 import scratch.idleontools.model.DataUtil;
 import scratch.idleontools.parser.interfaces.CharacterDataParser;
 
@@ -21,7 +21,7 @@ public final class CharacterClassParser extends CharacterDataParser {
     }
 
     @Override
-    public void parseInternal(IdleonParsingContext context, int characterIdx) {
+    protected void parseInternal(IdleonParsingContext context, int characterIdx) {
         JsonObject rootDocument = context.getRootDocument();
         JsonObject mainFields = DataUtil.getDocumentMainFields(rootDocument);
 

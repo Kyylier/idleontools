@@ -1,4 +1,4 @@
-package scratch.idleontools.templating;
+package scratch.idleontools.codegen;
 
 import freemarker.template.Configuration;
 import org.mozilla.javascript.NativeArray;

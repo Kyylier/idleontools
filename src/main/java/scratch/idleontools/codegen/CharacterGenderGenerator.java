@@ -1,4 +1,4 @@
-package scratch.idleontools.templating;
+package scratch.idleontools.codegen;
 
 import freemarker.template.Configuration;
 import org.mozilla.javascript.NativeArray;
@@ -17,7 +17,7 @@ public final class CharacterGenderGenerator extends IdleonJavaCodeGenerator {
     @Override
     protected void populateDataModel(Map<String, Object> dataModel, IdleonJsContext idleonJsContext) {
         NativeArray genderNames = idleonJsContext.getCustomListsMap().get("Genders");
-        dataModel.put("genderEnumNames", genderNames.stream().map(e -> TemplatingUtils.formatAsEnumFieldName((String) e)).toList());
+        dataModel.put("genderEnumNames", genderNames.stream().map(e -> CodegenUtils.formatAsEnumFieldName((String) e)).toList());
         dataModel.put("genderNames", genderNames);
         dataModel.put("genderIds", IntStream.range(0, genderNames.size()).toArray());
     }

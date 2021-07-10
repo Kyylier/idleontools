@@ -23,6 +23,12 @@ public final class IdleonJsContext {
 
     private Map<String, NativeArray> customListsMap; // scripts.CustomLists
 
+    private Map<String, NativeObject> monstersMap; // scripts.MonsterDefinitions
+    private LinkedHashSet<String> allMonsterProperties;
+
+    private Map<String, NativeObject> itemsMap; // scripts.ItemDefinitions
+    private LinkedHashSet<String> allItemProperties;
+
     private IdleonJsContext(String appJsLocation) {
         this.defaultSrcName = appJsLocation + ":ApplicationMainBlock:";
     }
@@ -31,7 +37,7 @@ public final class IdleonJsContext {
         Preconditions.checkState(!initialized);
         initialized = true;
 
-        this.context = Context.enter();
+        this.context = Context.enter(); // TODO: This assumes only 1 IdleonJsContext is ever created.
         this.context.setOptimizationLevel(-1); // Set interpreted mode due to script complexity.
         this.globalScope = context.initStandardObjects();
 
@@ -74,21 +80,32 @@ public final class IdleonJsContext {
         return this.customListsMap;
     }
 
-    public static IdleonJsContext initFromSource() throws IOException {
-        return initFromSource(DEFAULT_JS_RESOURCE_LOCATION);
+    public Map<String, NativeObject> getMonstersMap()  {
+        if (this.monstersMap == null) {
+            initializeMonsterData();
+        }
+        return this.monstersMap;
     }
 
-    public static IdleonJsContext initFromSource(String appJsLocation) throws IOException {
-        String gameJs = new String(Objects.requireNonNull(Main.class.getClassLoader()
-                .getResourceAsStream(appJsLocation)).readAllBytes(), StandardCharsets.UTF_8);
-        AstRoot astRoot = (new Parser()).parse(gameJs, appJsLocation, 1);
+    public LinkedHashSet<String> getAllMonsterProperties() {
+        if (this.allMonsterProperties == null) {
+            initializeMonsterData();
+        }
+        return this.allMonsterProperties;
+    }
 
-        IdleonSrcNodeVisitor srcNodeVistor = new IdleonSrcNodeVisitor();
-        astRoot.visit(srcNodeVistor);
+    public Map<String, NativeObject> getItemsMap() {
+        if (this.itemsMap == null) {
+            initializeItemData();
+        }
+        return this.itemsMap;
+    }
 
-        IdleonJsContext idleonJsContext = new IdleonJsContext(appJsLocation);
-        idleonJsContext.initialize(srcNodeVistor);
-        return idleonJsContext;
+    public LinkedHashSet<String> getAllItemProperties() {
+        if (this.allItemProperties == null) {
+            initializeItemData();
+        }
+        return this.allItemProperties;
     }
 
     private static final Set<String> CUSTOMLISTS_IDS_FILTER = Set.of(
@@ -109,6 +126,61 @@ public final class IdleonJsContext {
             customListsMap.put(listFuncName, (NativeArray) result);
         });
         this.customListsMap = customListsMap;
+    }
+
+    private void initializeMonsterData() {
+        Preconditions.checkState(this.monstersMap == null);
+        Preconditions.checkState(this.allMonsterProperties == null);
+        NativeFunction f = (NativeFunction) getGodObject().get("scripts.MonsterDefinitions");
+        ((NativeFunction) f.get("get")).call(getContext(), getGlobalScope(), f, new Object[] {});
+
+        LinkedHashSet<String> allMonsterProps = new LinkedHashSet<>();
+        HashMap<String, NativeObject> monstersMap = new LinkedHashMap<>();
+        NativeObject monsterData = JsBridgeUtil.flattenOnce((NativeObject) f.get("monsterDefs"));
+        monsterData.keySet().forEach(
+                monsterName -> {
+                    JsBridgeUtil.flattenOnce((NativeObject) monsterData.get(monsterName)).keySet().forEach(
+                            monsterProp -> allMonsterProps.add((String) monsterProp));
+                    monstersMap.put((String) monsterName, JsBridgeUtil.flattenOnce((NativeObject) monsterData.get(monsterName)));
+                });
+        this.monstersMap = monstersMap;
+        this.allMonsterProperties = allMonsterProps;
+    }
+
+    private void initializeItemData() {
+        Preconditions.checkState(this.itemsMap == null);
+        Preconditions.checkState(this.allItemProperties == null);
+        NativeFunction f = (NativeFunction) getGodObject().get("scripts.ItemDefinitions");
+        ((NativeFunction) f.get("get")).call(getContext(), getGlobalScope(), f, new Object[] {});
+
+        LinkedHashSet<String> allItemProps = new LinkedHashSet<>();
+        HashMap<String, NativeObject> itemsMap = new LinkedHashMap<>();
+        NativeObject itemData = JsBridgeUtil.flattenOnce((NativeObject) f.get("itemDefs"));
+        itemData.keySet().forEach(
+                itemName -> {
+                    JsBridgeUtil.flattenOnce((NativeObject) itemData.get(itemName)).keySet().forEach(
+                            itemProp -> allItemProps.add((String) itemProp));
+                    itemsMap.put((String) itemName, JsBridgeUtil.flattenOnce((NativeObject) itemData.get(itemName)));
+                });
+        this.itemsMap = itemsMap;
+        this.allItemProperties = allItemProps;
+    }
+
+    public static IdleonJsContext initFromSource() throws IOException {
+        return initFromSource(DEFAULT_JS_RESOURCE_LOCATION);
+    }
+
+    public static IdleonJsContext initFromSource(String appJsLocation) throws IOException {
+        String gameJs = new String(Objects.requireNonNull(IdleonJsContext.class.getClassLoader()
+                .getResourceAsStream(appJsLocation)).readAllBytes(), StandardCharsets.UTF_8);
+        AstRoot astRoot = (new Parser()).parse(gameJs, appJsLocation, 1);
+
+        IdleonSrcNodeVisitor srcNodeVistor = new IdleonSrcNodeVisitor();
+        astRoot.visit(srcNodeVistor);
+
+        IdleonJsContext idleonJsContext = new IdleonJsContext(appJsLocation);
+        idleonJsContext.initialize(srcNodeVistor);
+        return idleonJsContext;
     }
 
     /**

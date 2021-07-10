@@ -1,4 +1,4 @@
-package scratch.idleontools.templating;
+package scratch.idleontools.codegen;
 
 import freemarker.template.Configuration;
 import org.mozilla.javascript.NativeArray;
@@ -17,7 +17,7 @@ public final class CharacterSkillGenerator extends IdleonJavaCodeGenerator {
     @Override
     protected void populateDataModel(Map<String, Object> dataModel, IdleonJsContext idleonJsContext) {
         NativeArray skillNames = idleonJsContext.getCustomListsMap().get("SkillNames");
-        dataModel.put("skillEnumNames", skillNames.stream().map(e -> TemplatingUtils.formatAsEnumFieldName((String) e)).toList());
+        dataModel.put("skillEnumNames", skillNames.stream().map(e -> CodegenUtils.formatAsEnumFieldName((String) e)).toList());
         dataModel.put("skillNames", skillNames);
         dataModel.put("skillIds", IntStream.range(0, skillNames.size()).toArray());
     }

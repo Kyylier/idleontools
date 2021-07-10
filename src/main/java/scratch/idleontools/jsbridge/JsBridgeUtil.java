@@ -1,8 +1,11 @@
 package scratch.idleontools.jsbridge;
 
-import kotlin.Pair;
-import org.mozilla.javascript.NativeArray;
+import com.google.common.base.Preconditions;
+import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.ast.AstNode;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public final class JsBridgeUtil {
 
@@ -12,9 +15,20 @@ public final class JsBridgeUtil {
         return result.replaceAll("\n", "").trim();
     }
 
-    /**
-    public static Pair<Boolean, Class> isSingleType(NativeArray nativeArray) {
-    }*/
+    public static NativeObject flattenOnce(NativeObject o) {
+        Preconditions.checkArgument(o.keySet().size() == 1);
+        String extraLayer = (String) o.keySet().stream().findFirst().get();
+        return (NativeObject) o.get(extraLayer);
+    }
+
+    public static LinkedHashMap<String, Object> convertToMap(NativeObject nativeObject) {
+        LinkedHashMap<String, Object> resultMap = new LinkedHashMap<>();
+        nativeObject.keySet().forEach(key -> {
+            Object property = nativeObject.get(key);
+            resultMap.put((String) key, property instanceof NativeObject ? convertToMap((NativeObject) property) : property);
+        });
+        return resultMap;
+    }
 
     private JsBridgeUtil() {}
 }

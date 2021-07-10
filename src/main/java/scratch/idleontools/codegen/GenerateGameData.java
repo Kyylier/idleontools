@@ -1,4 +1,4 @@
-package scratch.idleontools.templating;
+package scratch.idleontools.codegen;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
@@ -16,10 +16,11 @@ public final class GenerateGameData {
         config.setDirectoryForTemplateLoading(new File("src/main/freemarker/template"));
         config.setDefaultEncoding("UTF-8");
 
-
         (new CharacterClassGenerator(config)).generate(idleonJsContext);
         (new CharacterGenderGenerator(config)).generate(idleonJsContext);
         (new CharacterSkillGenerator(config)).generate(idleonJsContext);
+        (new IdleonMonsterGenerator(config)).generate(idleonJsContext);
+        (new ItemStatGenerator(config)).generate(idleonJsContext);
     }
 
     private GenerateGameData() {}

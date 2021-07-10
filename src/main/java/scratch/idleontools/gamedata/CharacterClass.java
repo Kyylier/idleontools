@@ -9,7 +9,7 @@ import java.util.Objects;
 /** Enumeration of all character classes. */
 @Generated(
     value = "Generated with FreeMarker (version 2.3.31) using template character-class.ftl.",
-    date = "Jul 9, 2021, 4:32:14 PM"
+    date = "Jul 10, 2021, 3:31:01 PM"
 )
 public enum CharacterClass {
 

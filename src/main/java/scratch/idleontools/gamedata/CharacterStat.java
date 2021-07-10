@@ -1,10 +1,11 @@
-package scratch.idleontools.gamedatadeprecated;
+package scratch.idleontools.gamedata;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+// Not worth code-genning.
 public enum CharacterStat {
 
     STR(0),

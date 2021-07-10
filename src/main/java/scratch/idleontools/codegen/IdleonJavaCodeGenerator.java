@@ -1,4 +1,4 @@
-package scratch.idleontools.templating;
+package scratch.idleontools.codegen;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -41,7 +41,7 @@ public abstract class IdleonJavaCodeGenerator {
         // Add some supporting items for generating the lookup maps.
         if (!lookupMaps.isEmpty()) {
             dataModel.put("hasStaticInitialization", true);
-            // Camel-cased version of javaClassName (for usage in local variables)
+            // Camel-cased version of javaClassName (for usage in local variables, e.g. characterClass)
             dataModel.put("javaClassNameAsParam", Character.toLowerCase(outputClassName.charAt(0)) + outputClassName.substring(1));
         }
         dataModel.put("lookupMaps", lookupMaps);

@@ -2,7 +2,7 @@ package scratch.idleontools.parser;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonObject;
-import scratch.idleontools.gamedatadeprecated.CharacterStat;
+import scratch.idleontools.gamedata.CharacterStat;
 import scratch.idleontools.model.DataUtil;
 import scratch.idleontools.parser.interfaces.CharacterDataParser;
 

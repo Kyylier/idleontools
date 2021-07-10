@@ -1,6 +1,7 @@
 package scratch.idleontools.model;
 
 import com.google.common.base.Preconditions;
+import scratch.idleontools.gamedata.CharacterStat;
 import scratch.idleontools.gamedatadeprecated.*;
 
 import javax.annotation.Nullable;
